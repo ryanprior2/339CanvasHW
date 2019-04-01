@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>Ryan Prior - SI 339 Canvas</title>
+
+	<style type="text/css">
+		canvas{
+			border: 1px solid black;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<canvas id="canvas">
+		Drawing Canvas
+	</canvas>
+
+	<script>
+		var canvas = document.querySelector('canvas');
+		var ctx = canvas.getContext('2d');
+		canvas.width = window.innerWidth * 0.8;
+		canvas.height = window.innerHeight * 0.8;
+		var radius = 5;
+		var color = 'red';
+
+		function colorChange(newColor){
+			color=newColor;
+		}
+
+		function draw(){
+			ctx.beginPath();
+			ctx.fillStyle = color;
+			ctx.arc(x,y,radius,0,2*Math.PI);
+			ctx.fill();
+		}
+
+		window.addEventListener('mousemove', function(c) {
+			x = c.pageX;
+			y = c.pageY;
+			draw();
+		})
+
+		window.addEventListener('keydown', function(c) {	
+			switch(c.key){
+
+				case "r":
+					color="red";
+					break;
+
+				case "g":
+					color="green";
+					break;	
+
+				case "b":
+					color="blue";
+					break;
+
+				case "y":
+					color="yellow";
+					break;
+
+				case " ":
+					ctx.clearRect(0,0,canvas.width, canvas.height);
+					break;	
+
+				case "ArrowUp":
+					radius += 1;
+					break;
+
+				case "ArrowDown":
+					if(radius>1){
+						radius -=1;
+					}
+					else{
+					}
+			}
+		})
+
+		window.addEventListener('touchmove', function(c) {
+			var touch = c.touches[0];
+			x = touch.clientX;
+			y = touch.clientY;
+			drawCircle();
+		})
+
+		window.addEventListener('orientationchange', function(c) {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		}, false);
+	</script>
+
+	<div>
+		<input type="color" value="#000000" onchange="colorChange(value)">
+		<label>Color Picker</label>
+	</div>
+</body>
+
+</html>
